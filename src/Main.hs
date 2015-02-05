@@ -1,5 +1,6 @@
 module Main where
 
+import System.Environment
 import qualified Data.ByteString.Lazy as BL
 import qualified Data.Foldable as F
 import Data.Csv.Streaming
@@ -14,7 +15,8 @@ baseballStats = decode NoHeader
 
 main :: IO ()
 main = do
-    csvData <- BL.readFile "/Users/michaelruggiero/Desktop/batting.csv"
+    (file:_) <- getArgs
+    csvData <- BL.readFile file
     let summed = F.foldr summer 0 (baseballStats csvData)
     putStrLn $ "Total atBats was: " ++ (show summed)
     where summer = (+) . fourth
