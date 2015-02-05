@@ -12,11 +12,31 @@ build-type:          Simple
 cabal-version:       >=1.8
 
 executable carter
-  ghc-options:         -Wall
-  hs-source-dirs:      src
   main-is:             Main.hs
-  build-depends:       base ==4.6.*,
+  ghc-options:         -rtsopts
+  build-depends:       base,
+                       carter,
+                       bytestring,
+                       cassava
+  hs-source-dirs:      src
+  default-language:    Haskell2010
+
+test-suite tests
+    ghc-options:       -Wall
+    type:              exitcode-stdio-1.0
+    main-is:           Tests.hs
+    hs-source-dirs:    tests
+    build-depends:     base,
+                       carter,
+                       hspec >= 2.0 && < 2.1
+    default-language:  Haskell2010
+
+library
+    ghc-options:       -Wall
+    exposed-modules:   Carter
+    build-depends:     base >= 4.6 && <5,
                        bytestring,
                        vector,
                        cassava
-  default-language:    Haskell2010
+    hs-source-dirs:    src
+    default-language:  Haskell2010
